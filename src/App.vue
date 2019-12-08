@@ -1,11 +1,6 @@
 <template>
   <div id="app">
     <Header></Header>
-    <div class="theme">
-      <button @click="myFn('theme')"></button>
-      <button @click="myFn('theme1')"></button>
-      <button @click="myFn('theme2')"></button>
-    </div>
   </div>
 </template>
 <script>
@@ -14,12 +9,6 @@ export default {
   name: 'App',
   components: {
     Header
-  },
-  methods: {
-    myFn (data) {
-      // console.log(data)
-      document.documentElement.setAttribute('data-theme', data)
-    }
   }
 }
 </script>
