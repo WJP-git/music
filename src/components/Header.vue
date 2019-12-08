@@ -19,7 +19,7 @@ export default {
   width: 100%;
   height: 100px;
   /*background: #f00;*/
-  @include bg_color($background-color-theme);
+  @include bg_color();
   display: flex;
   justify-content: space-between;
   .header-left, .header-right{
@@ -31,6 +31,9 @@ export default {
   .header-title{
     text-align: center;
     line-height: 100px;
+    color: #fff;
+    font-weight: bold;
+    @include font_size($font_medium)
   }
 }
 </style>

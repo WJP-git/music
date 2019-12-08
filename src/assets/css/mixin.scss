@@ -25,8 +25,8 @@
 }
 
 // 根据属性选择器来设置背景颜色
-@mixin bg_color($color){
-  background: $color;
+@mixin bg_color(){
+  background: $background-color-theme;
   [data-theme=theme1] & {
     background: $background-color-theme1;
   }
