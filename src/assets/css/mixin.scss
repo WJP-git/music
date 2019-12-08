@@ -24,3 +24,14 @@
   -webkit-line-clamp:$row;
 }
 
+// 根据属性选择器来设置背景颜色
+@mixin bg_color($color){
+  background: $color;
+  [data-theme=theme1] & {
+    background: $background-color-theme1;
+  }
+  [data-theme=theme2] & {
+    background: $background-color-theme2;
+  }
+}
+
