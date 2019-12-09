@@ -1,14 +1,17 @@
 <template>
   <div id="app">
     <Header></Header>
+    <Tabbar></Tabbar>
   </div>
 </template>
 <script>
 import Header from './components/Header'
+import Tabbar from './components/Tabbar'
 export default {
   name: 'App',
   components: {
-    Header
+    Header,
+    Tabbar
   }
 }
 </script>
