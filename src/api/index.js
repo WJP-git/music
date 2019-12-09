@@ -3,3 +3,4 @@ import Network from './network'
 
 // 封装各种接口请求
 export const getBanner = () => Network.get('banner?type=2')
+export const getPersonalized = () => Network.get('personalized')
