@@ -1,7 +1,7 @@
 <template>
     <div class="personalized">
       <div class="personalized-top">
-        <h3>推荐歌单</h3>
+        <h3>{{title}}</h3>
       </div>
       <div class="personalized-list">
         <div class="item" v-for="value in personalized" :key="value.id">
@@ -20,6 +20,11 @@ export default {
       type: Array,
       default: () => [],
       required: true
+    },
+    title: {
+      type: String,
+      default: '',
+      required: true
     }
   }
 }
@@ -29,11 +34,14 @@ export default {
   @import "../assets/css/mixin";
   @import "../assets/css/variable";
 .personalized{
+  @include bg_sub_color();
   .personalized-top{
     width: 100%;
     height: 84px;
     line-height: 84px;
     @include bg_sub_color();
+    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
     padding: 0 20px;
     h3{
       @include font_size($font_large);
@@ -46,10 +54,9 @@ export default {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
-    padding: 20px 0;
     .item{
       width: 200px;
-      padding-bottom: 20px;
+      padding: 20px 0;
       img{
         width: 200px;
         height: 200px;
@@ -57,6 +64,10 @@ export default {
       }
       p{
         @include clamp(2);
+        @include font_color();
+        @include font_size($font_medium_s);
+        text-align: center;
+        margin-top: 10px;
       }
     }
   }
