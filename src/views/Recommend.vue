@@ -1,10 +1,14 @@
 <template>
-    <div class="recommend">
-      <Banner :banners="banners"></Banner>
-      <Personalized :personalized="personalized" :title="'推荐歌单'"></Personalized>
-      <Personalized :personalized="albums" :title="'最新专辑'"></Personalized>
-      <SongList :songs="songs"></SongList>
-    </div>
+  <div class="recommend">
+    <ScrollView>
+      <div>
+        <Banner :banners="banners"></Banner>
+        <Personalized :personalized="personalized" :title="'推荐歌单'"></Personalized>
+        <Personalized :personalized="albums" :title="'最新专辑'"></Personalized>
+        <SongList :songs="songs"></SongList>
+      </div>
+    </ScrollView>
+  </div>
 </template>
 
 <script>
@@ -12,13 +16,15 @@ import { getBanner, getPersonalized, getNewAlbum, getNewSong } from '../api/inde
 import Banner from '../components/Banner'
 import Personalized from '../components/Personalized'
 import SongList from '../components/SongList'
+import ScrollView from '../components/ScrollView'
 
 export default {
   name: 'Recommend',
   components: {
     Banner,
     Personalized,
-    SongList
+    SongList,
+    ScrollView
   },
   data () {
     return {
@@ -65,6 +71,12 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+.recommend{
+  position: fixed;
+  top: 184px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
 </style>
