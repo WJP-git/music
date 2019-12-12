@@ -11,7 +11,8 @@ export default {
   mounted () {
     this.iscroll = new IScroll(this.$refs.wrapper, {
       mouseWheel: true,
-      scrollbars: true,
+      scrollbars: false,
+      probeType: 3,
       // 解决拖拽卡顿问题
       scrollX: false,
       scrollY: true,
@@ -19,11 +20,6 @@ export default {
       disableTouch: false,
       disableMouse: true
     })
-    // setTimeout(() => {
-    //   console.log(this.iscroll.maxScrollY)
-    //   this.iscroll.refresh()
-    //   console.log(this.iscroll.maxScrollY)
-    // }, 5000)
     // 1.创建一个观察者对象
     /*
     MutationObserver构造函数只要监听到了指定内容发生了变化, 就会执行传入的回调函数
@@ -48,6 +44,14 @@ export default {
     第二个参数: 告诉观察者对象我们需要观察什么内容
     * */
     observer.observe(this.$refs.wrapper, config)
+  },
+  methods: {
+    // 提供一个监听滚动距离的方法给外界使用
+    scrolling (fn) {
+      this.iscroll.on('scroll', function () {
+        fn(this.y)
+      })
+    }
   }
 }
 </script>
