@@ -64,9 +64,15 @@ export default {
       // console.log(offsetY)
       if (offsetY < 0) {
         // console.log('向上滚动')
-        let scale = 20 * Math.abs(offsetY) / defaultHeight
+        // let scale = 20 * Math.abs(offsetY) / defaultHeight
+        let scale = Math.abs(offsetY) / defaultHeight
         // console.log(scale)
-        this.$refs.top.$el.style.filter = `blur(${scale}px)`
+        this.$refs.top.changeMask(scale)
+        /*
+        注意点: 高斯模糊效果是非常消耗性能的, 不推荐在移动端中使用
+                如果非要在移动端中使用, 那么建议只设置一次
+        * */
+        // this.$refs.top.$el.style.filter = `blur(${scale}px)`
       } else {
         // console.log('向下滚动')
         let scale = 1 + offsetY / defaultHeight

@@ -1,13 +1,15 @@
 <template>
   <div class="recommend">
-    <ScrollView>
-      <div>
-        <Banner :banners="banners"></Banner>
-        <Personalized :personalized="personalized" :title="'推荐歌单'" @select="fatherSelectItem" :type="'personalized'"></Personalized>
-        <Personalized :personalized="albums" :title="'最新专辑'" @select="fatherSelectItem" :type="'album'"></Personalized>
-        <SongList :songs="songs"></SongList>
-      </div>
-    </ScrollView>
+    <div class="recommend-warpper">
+      <ScrollView>
+        <div>
+          <Banner :banners="banners"></Banner>
+          <Personalized :personalized="personalized" :title="'推荐歌单'" @select="fatherSelectItem" :type="'personalized'"></Personalized>
+          <Personalized :personalized="albums" :title="'最新专辑'" @select="fatherSelectItem" :type="'album'"></Personalized>
+          <SongList :songs="songs"></SongList>
+        </div>
+      </ScrollView>
+    </div>
     <transition>
       <router-view></router-view>
     </transition>
@@ -88,7 +90,12 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  overflow: hidden;
+  /*overflow: hidden;*/
+  .recommend-warpper{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
 }
 
 .v-enter{
