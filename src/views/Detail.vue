@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import SubHeader from '../components/SubHeader'
-import DetailTop from '../components/DetailTop'
-import DetailBottom from '../components/DetailBottom'
+import SubHeader from '../components/Detail/DetailHeader'
+import DetailTop from '../components/Detail/DetailTop'
+import DetailBottom from '../components/Detail/DetailBottom'
 import ScrollView from '../components/ScrollView'
 
 import { getPlayList, getAlbum } from '../api/index'
