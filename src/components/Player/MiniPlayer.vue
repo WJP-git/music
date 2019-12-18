@@ -1,4 +1,8 @@
 <template>
+  <transition
+    :css="false"
+    @enter="enter"
+    @leave="leave">
     <div class="mini-player" v-show="this.isShowMiniPlayer">
       <div class="player-warpper">
         <div class="player-left" @click="showNormalPlayer">
@@ -14,10 +18,13 @@
         </div>
       </div>
     </div>
+  </transition>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import Velocity from 'velocity-animate'
+import 'velocity-animate/velocity.ui'
 export default {
   name: 'MiniPlayer',
   methods: {
@@ -31,6 +38,16 @@ export default {
     showNormalPlayer () {
       this.setFullScreen(true)
       this.setMiniPlayer(false)
+    },
+    enter (el, done) {
+      Velocity(el, 'transition.bounceUpIn', { duration: 500 }, function () {
+        done()
+      })
+    },
+    leave (el, done) {
+      Velocity(el, 'transition.bounceDownOut', { duration: 500 }, function () {
+        done()
+      })
     }
   },
   computed: {
