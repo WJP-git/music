@@ -2,7 +2,7 @@
   <swiper :options="swiperOption" class="banner">
     <!-- slides -->
     <swiper-slide class="cd">
-      <div class="cd-warpper">
+      <div class="cd-warpper" ref="cdWarpper">
         <img src="https://y.gtimg.cn/music/photo_new/T002R300x300M000003y8dsH2wBHlo.jpg" alt="">
       </div>
       <p>号即可都是垃圾放入手机袋</p>
@@ -72,6 +72,7 @@
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import ScrollView from '../ScrollView'
+import { mapGetters } from 'vuex'
 export default {
   name: 'PlayerMiddle',
   components: {
@@ -91,6 +92,20 @@ export default {
         observer: true,
         observeParents: true,
         observeSlideChildren: true
+      }
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'isPlaying'
+    ])
+  },
+  watch: {
+    isPlaying (newValue, oldValue) {
+      if (newValue) {
+        this.$refs.cdWarpper.classList.add('active')
+      } else {
+        this.$refs.cdWarpper.classList.remove('active')
       }
     }
   }
@@ -115,6 +130,11 @@ export default {
       border-radius: 50%;
       border: 30px solid #fff;
       overflow: hidden;
+      animation: sport 3s linear infinite;
+      animation-play-state: paused;
+      &.active{
+        animation-play-state: running;
+      }
       img{
         width: 100%;
         height: 100%;
@@ -139,6 +159,14 @@ export default {
     }
   }
 }
+  @keyframes sport {
+    from{
+      transform: rotate(0deg);
+    }
+    to{
+      transform: rotate(360deg);
+    }
+  }
 </style>
 <style lang="scss">
   @import "../../assets/css/mixin";

@@ -6,14 +6,14 @@
     <div class="mini-player" v-show="this.isShowMiniPlayer">
       <div class="player-warpper">
         <div class="player-left" @click="showNormalPlayer">
-          <img src="https://y.gtimg.cn/music/photo_new/T002R300x300M000003y8dsH2wBHlo.jpg" alt="">
+          <img src="https://y.gtimg.cn/music/photo_new/T002R300x300M000003y8dsH2wBHlo.jpg" ref="cd">
           <div class="player-title">
             <h3>演员</h3>
             <p>薛之谦</p>
           </div>
         </div>
         <div class="player-right">
-          <div class="play"></div>
+          <div class="play" @click="play" ref="play"></div>
           <div class="list" @click.stop="showList"></div>
         </div>
       </div>
@@ -30,7 +30,8 @@ export default {
   methods: {
     ...mapActions([
       'setFullScreen',
-      'setMiniPlayer'
+      'setMiniPlayer',
+      'setIsPlaying'
     ]),
     showList () {
       this.$emit('showList')
@@ -48,12 +49,27 @@ export default {
       Velocity(el, 'transition.bounceDownOut', { duration: 500 }, function () {
         done()
       })
+    },
+    play () {
+      this.setIsPlaying(!this.isPlaying)
     }
   },
   computed: {
     ...mapGetters([
-      'isShowMiniPlayer'
+      'isShowMiniPlayer',
+      'isPlaying'
     ])
+  },
+  watch: {
+    isPlaying (newValue, oldValue) {
+      if (newValue) {
+        this.$refs.play.classList.add('active')
+        this.$refs.cd.classList.add('active')
+      } else {
+        this.$refs.play.classList.remove('active')
+        this.$refs.cd.classList.remove('active')
+      }
+    }
   }
 }
 </script>
@@ -82,6 +98,11 @@ export default {
         height: 100px;
         border-radius: 50%;
         margin-right: 20px;
+        animation: sport 3s linear infinite;
+        animation-play-state: paused;
+        &.active{
+          animation-play-state: running;
+        }
       }
       .player-title{
         display: flex;
@@ -104,7 +125,10 @@ export default {
       .play{
         width: 84px;
         height: 84px;
-        @include bg_img('../../assets/images/play')
+        @include bg_img('../../assets/images/pause');
+        &.active{
+          @include bg_img('../../assets/images/play');
+        }
       }
       .list{
         width: 120px;
@@ -114,4 +138,12 @@ export default {
     }
   }
 }
+  @keyframes sport {
+    from{
+      transform: rotate(0deg);
+    }
+    to{
+      transform: rotate(360deg);
+    }
+  }
 </style>

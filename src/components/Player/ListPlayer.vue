@@ -39,7 +39,7 @@
               </li>
               <li class="item">
                 <div class="item-left">
-                  <div class="item-play"></div>
+                  <div class="item-play" @click="play" ref="play"></div>
                   <p>演员</p>
                 </div>
                 <div class="item-right">
@@ -62,12 +62,16 @@
 import ScrollView from '../ScrollView'
 import Velocity from 'velocity-animate'
 import 'velocity-animate/velocity.ui'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'ListPlayer',
   components: {
     ScrollView
   },
   methods: {
+    ...mapActions([
+      'setIsPlaying'
+    ]),
     show () {
       this.isShow = true
     },
@@ -83,11 +87,28 @@ export default {
       Velocity(el, 'transition.perspectiveUpOut', { duration: 500 }, function () {
         done()
       })
+    },
+    play () {
+      this.setIsPlaying(!this.isPlaying)
     }
   },
   data: function () {
     return {
       isShow: false
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'isPlaying'
+    ])
+  },
+  watch: {
+    isPlaying (newValue, oldValue) {
+      if (newValue) {
+        this.$refs.play.classList.add('active')
+      } else {
+        this.$refs.play.classList.remove('active')
+      }
     }
   }
 }
@@ -148,7 +169,10 @@ export default {
             width: 56px;
             height: 56px;
             margin-right: 20px;
-            @include bg_img('../../assets/images/small_play')
+            @include bg_img('../../assets/images/small_pause');
+            &.active{
+              @include bg_img('../../assets/images/small_play');
+            }
           }
           p{
             @include font_size($font_medium_s);
