@@ -1,7 +1,7 @@
 <template>
-    <div class="mini-player">
+    <div class="mini-player" v-show="this.isShowMiniPlayer">
       <div class="player-warpper">
-        <div class="player-left">
+        <div class="player-left" @click="showNormalPlayer">
           <img src="https://y.gtimg.cn/music/photo_new/T002R300x300M000003y8dsH2wBHlo.jpg" alt="">
           <div class="player-title">
             <h3>演员</h3>
@@ -10,15 +10,34 @@
         </div>
         <div class="player-right">
           <div class="play"></div>
-          <div class="list"></div>
+          <div class="list" @click.stop="showList"></div>
         </div>
       </div>
     </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
-  name: 'MiniPlayer'
+  name: 'MiniPlayer',
+  methods: {
+    ...mapActions([
+      'setFullScreen',
+      'setMiniPlayer'
+    ]),
+    showList () {
+      this.$emit('showList')
+    },
+    showNormalPlayer () {
+      this.setFullScreen(true)
+      this.setMiniPlayer(false)
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'isShowMiniPlayer'
+    ])
+  }
 }
 </script>
 
