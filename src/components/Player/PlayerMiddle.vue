@@ -2,7 +2,7 @@
   <swiper :options="swiperOption" class="banner">
     <!-- slides -->
     <swiper-slide class="cd">
-      <div class="cd-warpper" ref="cdWarpper">
+      <div class="cd-wrapper" ref="cdWrapper">
         <img src="https://y.gtimg.cn/music/photo_new/T002R300x300M000003y8dsH2wBHlo.jpg" alt="">
       </div>
       <p>号即可都是垃圾放入手机袋</p>
@@ -103,9 +103,9 @@ export default {
   watch: {
     isPlaying (newValue, oldValue) {
       if (newValue) {
-        this.$refs.cdWarpper.classList.add('active')
+        this.$refs.cdWrapper.classList.add('active')
       } else {
-        this.$refs.cdWarpper.classList.remove('active')
+        this.$refs.cdWrapper.classList.remove('active')
       }
     }
   }
@@ -122,7 +122,7 @@ export default {
   left: 0;
   right: 0;
   .cd{
-    .cd-warpper{
+    .cd-wrapper{
       display: block;
       margin: 0 auto;
       width: 500px;

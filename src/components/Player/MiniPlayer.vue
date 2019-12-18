@@ -4,7 +4,7 @@
     @enter="enter"
     @leave="leave">
     <div class="mini-player" v-show="this.isShowMiniPlayer">
-      <div class="player-warpper">
+      <div class="player-wrapper">
         <div class="player-left" @click="showNormalPlayer">
           <img src="https://y.gtimg.cn/music/photo_new/T002R300x300M000003y8dsH2wBHlo.jpg" ref="cd">
           <div class="player-title">
@@ -83,7 +83,7 @@ export default {
   bottom: 0;
   width: 100%;
   height: 150px;
-  .player-warpper{
+  .player-wrapper{
     width: 100%;
     height: 100%;
     @include bg_color();

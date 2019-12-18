@@ -5,7 +5,7 @@
     @leave="leave">
 <!--    <div class="normal-player" v-show="this.$store.getters.isFullScreen">-->
     <div class="normal-player" v-show="this.isFullScreen">
-      <div class="player-warpper">
+      <div class="player-wrapper">
         <PlayerHeader></PlayerHeader>
         <PlayerMiddle></PlayerMiddle>
         <PlayerBottom></PlayerBottom>
@@ -62,7 +62,7 @@ export default {
   left: 0;
   right: 0;
   @include bg_sub_color();
-  .player-warpper{
+  .player-wrapper{
     width: 100%;
     height: 100%;
     position: relative;

@@ -7,5 +7,8 @@ export default {
   },
   isPlaying (state) {
     return state.isPlaying
+  },
+  modeType  (state) {
+    return state.modeType
   }
 }
