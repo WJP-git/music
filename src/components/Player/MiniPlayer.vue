@@ -31,10 +31,11 @@ export default {
     ...mapActions([
       'setFullScreen',
       'setMiniPlayer',
+      'setListPlayer',
       'setIsPlaying'
     ]),
     showList () {
-      this.$emit('showList')
+      this.setListPlayer(true)
     },
     showNormalPlayer () {
       this.setFullScreen(true)
@@ -125,9 +126,9 @@ export default {
       .play{
         width: 84px;
         height: 84px;
-        @include bg_img('../../assets/images/pause');
+        @include bg_img('../../assets/images/play');
         &.active{
-          @include bg_img('../../assets/images/play');
+          @include bg_img('../../assets/images/pause');
         }
       }
       .list{
