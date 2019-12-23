@@ -5,7 +5,8 @@ import {
   SET_IS_PLAYING,
   SET_MODE_TYPE,
   SET_SONG_DETAIL,
-  SET_SONG_LYRIC
+  SET_SONG_LYRIC,
+  SET_DEL_SONG
 } from './mutations-type'
 
 import {
@@ -65,6 +66,9 @@ export default {
     // console.log(result.lrc.lyric)
     let obj = parseLyric(result.lrc.lyric)
     commit(SET_SONG_LYRIC, obj)
+  },
+  setDelSong  ({ commit }, index) {
+    commit(SET_DEL_SONG, index)
   }
 }
 // 格式化歌词方法

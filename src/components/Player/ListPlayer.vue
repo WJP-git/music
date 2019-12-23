@@ -13,20 +13,20 @@
             <p v-else>随机播放</p>
           </div>
           <div class="top-right">
-            <div class="del"></div>
+            <div class="del" @click="delAll"></div>
           </div>
         </div>
         <div class="player-middle">
           <ScrollView ref="scrollView">
-            <ul>
-              <li class="item" v-for="value in songs" :key="value.id">
+            <ul ref="play">
+              <li class="item" v-for="(value, index) in songs" :key="value.id">
                 <div class="item-left">
-                  <div class="item-play" @click="play" ref="play"></div>
+                  <div class="item-play" @click="play" v-show="currentIndex === index"></div>
                   <p>{{value.name}}</p>
                 </div>
                 <div class="item-right">
                   <div class="item-favorite"></div>
-                  <div class="item-del"></div>
+                  <div class="item-del" @click="del(index)"></div>
                 </div>
               </li>
             </ul>
@@ -55,7 +55,8 @@ export default {
     ...mapActions([
       'setIsPlaying',
       'setModeType',
-      'setListPlayer'
+      'setListPlayer',
+      'setDelSong'
     ]),
     hidden () {
       this.setListPlayer(false)
@@ -81,6 +82,12 @@ export default {
       } else if (this.modeType === modeType.random) {
         this.setModeType(modeType.loop)
       }
+    },
+    del (index) {
+      this.setDelSong(index)
+    },
+    delAll () {
+      this.setDelSong()
     }
   },
   computed: {
@@ -88,7 +95,8 @@ export default {
       'isPlaying',
       'modeType',
       'isShowListPlayer',
-      'songs'
+      'songs',
+      'currentIndex'
     ])
   },
   watch: {
@@ -170,6 +178,15 @@ export default {
     .player-middle{
       height: 700px;
       overflow: hidden;
+      ul{
+        &.active{
+          .item{
+            .item-play{
+              @include bg_img('../../assets/images/small_pause');
+            }
+          }
+        }
+      }
       .item{
         border-top: 1px solid #ccc;
         height: 100px;
@@ -186,9 +203,6 @@ export default {
             height: 56px;
             margin-right: 20px;
             @include bg_img('../../assets/images/small_play');
-            &.active{
-              @include bg_img('../../assets/images/small_pause');
-            }
           }
           p{
             @include font_size($font_medium_s);
