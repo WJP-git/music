@@ -17,32 +17,12 @@
           </div>
         </div>
         <div class="player-middle">
-          <ScrollView>
+          <ScrollView ref="scrollView">
             <ul>
-              <li class="item">
-                <div class="item-left">
-                  <div class="item-play"></div>
-                  <p>演员</p>
-                </div>
-                <div class="item-right">
-                  <div class="item-favorite"></div>
-                  <div class="item-del"></div>
-                </div>
-              </li>
-              <li class="item">
-                <div class="item-left">
-                  <div class="item-play"></div>
-                  <p>演员</p>
-                </div>
-                <div class="item-right">
-                  <div class="item-favorite"></div>
-                  <div class="item-del"></div>
-                </div>
-              </li>
-              <li class="item">
+              <li class="item" v-for="value in songs" :key="value.id">
                 <div class="item-left">
                   <div class="item-play" @click="play" ref="play"></div>
-                  <p>演员</p>
+                  <p>{{value.name}}</p>
                 </div>
                 <div class="item-right">
                   <div class="item-favorite"></div>
@@ -107,7 +87,8 @@ export default {
     ...mapGetters([
       'isPlaying',
       'modeType',
-      'isShowListPlayer'
+      'isShowListPlayer',
+      'songs'
     ])
   },
   watch: {
@@ -128,6 +109,11 @@ export default {
       } else if (newValue === modeType.random) {
         this.$refs.mode.classList.remove('one')
         this.$refs.mode.classList.add('random')
+      }
+    },
+    isShowListPlayer (newValue, oldValue) {
+      if (newValue) {
+        this.$refs.scrollView.refresh()
       }
     }
   }
@@ -182,6 +168,8 @@ export default {
       }
     }
     .player-middle{
+      height: 700px;
+      overflow: hidden;
       .item{
         border-top: 1px solid #ccc;
         height: 100px;
