@@ -11,9 +11,9 @@
       </div>
       <div class="bottom-controll">
         <div class="mode loop" @click="mode" ref="mode"></div>
-        <div class="prev"></div>
+        <div class="prev" @click="prev"></div>
         <div class="play" @click="play" ref="play"></div>
-        <div class="next"></div>
+        <div class="next" @click="next"></div>
         <div class="favorite"></div>
       </div>
     </div>
@@ -27,10 +27,17 @@ export default {
   methods: {
     ...mapActions([
       'setIsPlaying',
-      'setModeType'
+      'setModeType',
+      'setCurrentIndex'
     ]),
     play () {
       this.setIsPlaying(!this.isPlaying)
+    },
+    prev () {
+      this.setCurrentIndex(this.currentIndex - 1)
+    },
+    next () {
+      this.setCurrentIndex(this.currentIndex + 1)
     },
     mode () {
       if (this.modeType === modeType.loop) {
@@ -45,7 +52,8 @@ export default {
   computed: {
     ...mapGetters([
       'isPlaying',
-      'modeType'
+      'modeType',
+      'currentIndex'
     ])
   },
   watch: {

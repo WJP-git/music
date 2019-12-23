@@ -19,14 +19,14 @@
         <div class="player-middle">
           <ScrollView ref="scrollView">
             <ul ref="play">
-              <li class="item" v-for="(value, index) in songs" :key="value.id">
+              <li class="item" v-for="(value, index) in songs" :key="value.id" @click="selectMusic(index)">
                 <div class="item-left">
-                  <div class="item-play" @click="play" v-show="currentIndex === index"></div>
+                  <div class="item-play" @click.stop="play" v-show="currentIndex === index"></div>
                   <p>{{value.name}}</p>
                 </div>
                 <div class="item-right">
                   <div class="item-favorite"></div>
-                  <div class="item-del" @click="del(index)"></div>
+                  <div class="item-del" @click.stop="del(index)"></div>
                 </div>
               </li>
             </ul>
@@ -56,7 +56,8 @@ export default {
       'setIsPlaying',
       'setModeType',
       'setListPlayer',
-      'setDelSong'
+      'setDelSong',
+      'setCurrentIndex'
     ]),
     hidden () {
       this.setListPlayer(false)
@@ -88,6 +89,9 @@ export default {
     },
     delAll () {
       this.setDelSong()
+    },
+    selectMusic (index) {
+      this.setCurrentIndex(index)
     }
   },
   computed: {
