@@ -8,9 +8,9 @@
       <div class="player-wrapper">
         <PlayerHeader></PlayerHeader>
         <PlayerMiddle></PlayerMiddle>
-        <PlayerBottom></PlayerBottom>
+        <PlayerBottom :totalTime="totalTime" :currentTime="currentTime"></PlayerBottom>
       </div>
-      <div class="palyer-bg">
+      <div class="player-bg">
         <img :src="currentSong.picUrl" alt="">
       </div>
     </div>
@@ -60,6 +60,18 @@ export default {
       }
       this.getSongLyric(newValue.id)
     }
+  },
+  props: {
+    totalTime: {
+      type: Number,
+      default: 0,
+      required: true
+    },
+    currentTime: {
+      type: Number,
+      default: 0,
+      required: true
+    }
   }
 }
 </script>
@@ -80,7 +92,7 @@ export default {
     position: relative;
     z-index: 999;
   }
-  .palyer-bg{
+  .player-bg{
     position: absolute;
     left: 0;
     top: 0;

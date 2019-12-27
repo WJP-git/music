@@ -1,9 +1,9 @@
 <template>
     <div class="player">
-      <NormalPlayer></NormalPlayer>
+      <NormalPlayer :totalTime="totalTime" :currentTime="currentTime"></NormalPlayer>
       <MiniPlayer></MiniPlayer>
-      <ListPlayer ref="listPlayer"></ListPlayer>
-      <audio :src="currentSong.url" ref="audio"></audio>
+      <ListPlayer></ListPlayer>
+      <audio :src="currentSong.url" ref="audio" @timeupdate="timeupdate"></audio>
     </div>
 </template>
 
@@ -26,6 +26,12 @@ export default {
       'currentIndex'
     ])
   },
+  methods: {
+    timeupdate (e) {
+      // console.log(e.target.currentTime)
+      this.currentTime = e.target.currentTime
+    }
+  },
   watch: {
     isPlaying (newValue, oldValue) {
       if (newValue) {
@@ -36,12 +42,24 @@ export default {
     },
     currentIndex () {
       this.$refs.audio.oncanplay = () => {
+        this.totalTime = this.$refs.audio.duration
         if (this.isPlaying) {
           this.$refs.audio.play()
         } else {
           this.$refs.audio.pause()
         }
       }
+    }
+  },
+  mounted () {
+    this.$refs.audio.oncanplay = () => {
+      this.totalTime = this.$refs.audio.duration
+    }
+  },
+  data () {
+    return {
+      totalTime: 0,
+      currentTime: 0
     }
   }
 }
