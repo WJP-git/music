@@ -8,5 +8,6 @@ export default {
   songs: [],
   currentSong: {},
   currentIndex: 0,
-  currentLyric: {}
+  currentLyric: {},
+  curTime: 0
 }

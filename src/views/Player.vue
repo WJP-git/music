@@ -23,7 +23,8 @@ export default {
     ...mapGetters([
       'currentSong',
       'isPlaying',
-      'currentIndex'
+      'currentIndex',
+      'curTime'
     ])
   },
   methods: {
@@ -49,6 +50,9 @@ export default {
           this.$refs.audio.pause()
         }
       }
+    },
+    curTime (newValue, oldValue) {
+      this.$refs.audio.currentTime = newValue
     }
   },
   mounted () {

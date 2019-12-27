@@ -2,7 +2,7 @@
     <div class="player-bottom">
       <div class="bottom-progress">
         <span ref="eleCurrentTime">00:00</span>
-        <div class="progress-bar">
+        <div class="progress-bar" @click="progressClick">
           <div class="progress-line" ref="progressLine">
             <div class="progress-dot"></div>
           </div>
@@ -28,7 +28,8 @@ export default {
     ...mapActions([
       'setIsPlaying',
       'setModeType',
-      'setCurrentIndex'
+      'setCurrentIndex',
+      'setCurrentTime'
     ]),
     play () {
       this.setIsPlaying(!this.isPlaying)
@@ -47,6 +48,20 @@ export default {
       } else if (this.modeType === modeType.random) {
         this.setModeType(modeType.loop)
       }
+    },
+    progressClick (e) {
+      // 1.计算进度条的位置
+      let normalLeft = e.target.offsetLeft
+      let eventLeft = e.pageX
+      let clickLeft = eventLeft - normalLeft
+      let progressWidth = e.target.offsetWidth
+      let value = clickLeft / progressWidth
+      this.$refs.progressLine.style.width = value * 100 + '%'
+
+      // 2.计算当前应该从什么地方开始播放
+      let currentTime = this.totalTime * value
+      // console.log(currentTime)
+      this.setCurrentTime(currentTime)
     },
     formartTime (time) {
       // 2.得到两个时间之间的差值(秒)
