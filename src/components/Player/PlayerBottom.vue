@@ -2,7 +2,7 @@
     <div class="player-bottom">
       <div class="bottom-progress">
         <span ref="eleCurrentTime">00:00</span>
-        <div class="progress-bar" @click="progressClick">
+        <div class="progress-bar" @click="progressClick" ref="progressBar">
           <div class="progress-line" ref="progressLine">
             <div class="progress-dot"></div>
           </div>
@@ -51,10 +51,12 @@ export default {
     },
     progressClick (e) {
       // 1.计算进度条的位置
-      let normalLeft = e.target.offsetLeft
+      // let normalLeft = e.target.offsetLeft
+      let normalLeft = this.$refs.progressBar.offsetLeft
       let eventLeft = e.pageX
       let clickLeft = eventLeft - normalLeft
-      let progressWidth = e.target.offsetWidth
+      // let progressWidth = e.target.offsetWidth
+      let progressWidth = this.$refs.progressBar.offsetWidth
       let value = clickLeft / progressWidth
       this.$refs.progressLine.style.width = value * 100 + '%'
 
