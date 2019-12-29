@@ -9,7 +9,8 @@ import {
   SET_DEL_SONG,
   SET_CURRENT_INDEX,
   SET_CURRENT_TIME,
-  SET_FAVORITE_SONG
+  SET_FAVORITE_SONG,
+  SET_FAVORITE_LIST
 } from './mutations-type'
 
 import {
@@ -88,6 +89,9 @@ export default {
   },
   setFavoriteSong ({ commit }, song) {
     commit(SET_FAVORITE_SONG, song)
+  },
+  setFavoriteList ({ commit }, list) {
+    commit(SET_FAVORITE_LIST, list)
   }
 }
 // 格式化歌词方法

@@ -99,7 +99,7 @@ export default {
     },
     isFavorite (song) {
       let result = this.favoriteList.find(function (currentValue) {
-        return currentValue === song
+        return currentValue.id === song.id
       })
       return result !== undefined
     }

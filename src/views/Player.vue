@@ -27,12 +27,14 @@ export default {
       'currentIndex',
       'curTime',
       'modeType',
-      'songs'
+      'songs',
+      'favoriteList'
     ])
   },
   methods: {
     ...mapActions([
-      'setCurrentIndex'
+      'setCurrentIndex',
+      'setFavoriteList'
     ]),
     timeupdate (e) {
       // console.log(e.target.currentTime)
@@ -74,7 +76,15 @@ export default {
     },
     curTime (newValue, oldValue) {
       this.$refs.audio.currentTime = newValue
+    },
+    favoriteList (newValue, oldValue) {
+      window.localStorage.setItem('favoriteList', JSON.stringify(newValue))
     }
+  },
+  created () {
+    let list = JSON.parse(window.localStorage.getItem('favoriteList'))
+    if (list === null) { return }
+    this.setFavoriteList(list)
   },
   mounted () {
     this.$refs.audio.oncanplay = () => {
