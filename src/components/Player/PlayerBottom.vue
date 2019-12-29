@@ -14,7 +14,7 @@
         <div class="prev" @click="prev"></div>
         <div class="play" @click="play" ref="play"></div>
         <div class="next" @click="next"></div>
-        <div class="favorite"></div>
+        <div class="favorite" @click="favorite" :class="{'active': isFavorite(currentSong)}"></div>
       </div>
     </div>
 </template>
@@ -29,7 +29,8 @@ export default {
       'setIsPlaying',
       'setModeType',
       'setCurrentIndex',
-      'setCurrentTime'
+      'setCurrentTime',
+      'setFavoriteSong'
     ]),
     play () {
       this.setIsPlaying(!this.isPlaying)
@@ -48,6 +49,15 @@ export default {
       } else if (this.modeType === modeType.random) {
         this.setModeType(modeType.loop)
       }
+    },
+    favorite () {
+      this.setFavoriteSong(this.currentSong)
+    },
+    isFavorite (song) {
+      let result = this.favoriteList.find(function (currentValue) {
+        return currentValue === song
+      })
+      return result !== undefined
     },
     progressClick (e) {
       // 1.计算进度条的位置
@@ -92,7 +102,9 @@ export default {
     ...mapGetters([
       'isPlaying',
       'modeType',
-      'currentIndex'
+      'currentIndex',
+      'currentSong',
+      'favoriteList'
     ])
   },
   watch: {
@@ -220,6 +232,9 @@ export default {
     }
     .favorite{
       @include bg_img('../../assets/images/un_favorite');
+      &.active{
+        @include bg_img('../../assets/images/favorite');
+      }
     }
   }
 }
