@@ -13,6 +13,8 @@ import MiniPlayer from '../components/Player/MiniPlayer'
 import ListPlayer from '../components/Player/ListPlayer'
 import { mapGetters, mapActions } from 'vuex'
 import mode from '../store/modeType'
+import { getRandomIntInclusive, setLocalStorage, getLocalStorage } from '../tools/tools'
+
 export default {
   name: 'Player',
   components: {
@@ -49,14 +51,9 @@ export default {
       } else if (this.modeType === mode.one) {
         this.$refs.audio.play()
       } else if (this.modeType === mode.random) {
-        let index = this.getRandomIntInclusive(0, this.songs.length - 1)
+        let index = getRandomIntInclusive(0, this.songs.length - 1)
         this.setCurrentIndex(index)
       }
-    },
-    getRandomIntInclusive (min, max) {
-      min = Math.ceil(min)
-      max = Math.floor(max)
-      return Math.floor(Math.random() * (max - min + 1)) + min // 含最大值，含最小值
     }
   },
   watch: {
@@ -83,18 +80,22 @@ export default {
       this.$refs.audio.currentTime = newValue
     },
     favoriteList (newValue, oldValue) {
-      window.localStorage.setItem('favoriteList', JSON.stringify(newValue))
+      // window.localStorage.setItem('favoriteList', JSON.stringify(newValue))
+      setLocalStorage('favoriteList', newValue)
     },
     historyList (newValue, oldValue) {
-      window.localStorage.setItem('historyList', JSON.stringify(newValue))
+      // window.localStorage.setItem('historyList', JSON.stringify(newValue))
+      setLocalStorage('historyList', newValue)
     }
   },
   created () {
-    let favoriteList = JSON.parse(window.localStorage.getItem('favoriteList'))
+    // let favoriteList = JSON.parse(window.localStorage.getItem('favoriteList'))
+    let favoriteList = getLocalStorage('favoriteList')
     if (favoriteList === null) { return }
     this.setFavoriteList(favoriteList)
 
-    let historyList = JSON.parse(window.localStorage.getItem('historyList'))
+    // let historyList = JSON.parse(window.localStorage.getItem('historyList'))
+    let historyList = getLocalStorage('historyList')
     if (historyList === null) { return }
     this.setHistoryList(historyList)
   },
