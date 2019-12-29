@@ -62,6 +62,7 @@ export default {
     @include bg_img('../../assets/images/more')
   }
   .header-title{
+    width: 60%;
     text-align: center;
     line-height: 100px;
     color: #fff;

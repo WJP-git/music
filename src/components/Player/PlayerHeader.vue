@@ -56,6 +56,7 @@ export default {
     //@include bg_img('../../assets/images/more')
   }
   .header-title{
+    width: 60%;
     display: flex;
     justify-content: center;
     flex-direction: column;

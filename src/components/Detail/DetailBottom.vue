@@ -50,7 +50,7 @@ export default {
   width: 100%;
   li{
     width: 100%;
-    height: 100px;
+    height: 120px;
     padding: 20px;
     box-sizing: border-box;
     @include bg_sub_color();
@@ -75,11 +75,13 @@ export default {
   .item{
     h3{
       @include font_color();
-      @include font_size($font_medium)
+      @include font_size($font_medium);
+      @include no-wrap();
     }
     p{
       @include font_color();
       @include font_size($font_samll);
+      @include no-wrap();
       margin-top: 10px;
       opacity: 0.8;
     }

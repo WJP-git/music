@@ -95,6 +95,7 @@ export default {
     .player-left{
       display: flex;
       padding-left: 30px;
+      width: 50%;
       img{
         width: 100px;
         height: 100px;
@@ -111,6 +112,7 @@ export default {
         flex-direction: column;
         /*align-items: center;*/
         justify-content: center;
+        @include no-wrap();
         h3{
           @include font_size($font_medium);
           @include font_color();

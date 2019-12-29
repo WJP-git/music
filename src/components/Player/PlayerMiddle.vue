@@ -51,7 +51,8 @@ export default {
     ...mapGetters([
       'isPlaying',
       'currentSong',
-      'currentLyric'
+      'currentLyric',
+      'currentIndex'
     ])
   },
   watch: {
@@ -89,6 +90,12 @@ export default {
       } else {
         this.$refs.scrollView.scrollTo(0, 0, 100)
       }
+    },
+    currentLyric (newValue, oldValue) {
+      for (let key in newValue) {
+        this.currentLineNum = key
+        return
+      }
     }
   },
   methods: {
@@ -98,6 +105,9 @@ export default {
       }
     },
     getActiveLineNum (lineNum) {
+      if (lineNum < 0) {
+        return this.currentLineNum
+      }
       let result = this.currentLyric[lineNum + '']
       if (result === undefined || result === '') {
         lineNum--
