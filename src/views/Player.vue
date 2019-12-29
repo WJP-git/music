@@ -28,13 +28,16 @@ export default {
       'curTime',
       'modeType',
       'songs',
-      'favoriteList'
+      'favoriteList',
+      'historyList'
     ])
   },
   methods: {
     ...mapActions([
       'setCurrentIndex',
-      'setFavoriteList'
+      'setFavoriteList',
+      'setHistorySong',
+      'setHistoryList'
     ]),
     timeupdate (e) {
       // console.log(e.target.currentTime)
@@ -59,6 +62,7 @@ export default {
   watch: {
     isPlaying (newValue, oldValue) {
       if (newValue) {
+        this.setHistorySong(this.currentSong)
         this.$refs.audio.play()
       } else {
         this.$refs.audio.pause()
@@ -68,6 +72,7 @@ export default {
       this.$refs.audio.oncanplay = () => {
         this.totalTime = this.$refs.audio.duration
         if (this.isPlaying) {
+          this.setHistorySong(this.currentSong)
           this.$refs.audio.play()
         } else {
           this.$refs.audio.pause()
@@ -79,12 +84,19 @@ export default {
     },
     favoriteList (newValue, oldValue) {
       window.localStorage.setItem('favoriteList', JSON.stringify(newValue))
+    },
+    historyList (newValue, oldValue) {
+      window.localStorage.setItem('historyList', JSON.stringify(newValue))
     }
   },
   created () {
-    let list = JSON.parse(window.localStorage.getItem('favoriteList'))
-    if (list === null) { return }
-    this.setFavoriteList(list)
+    let favoriteList = JSON.parse(window.localStorage.getItem('favoriteList'))
+    if (favoriteList === null) { return }
+    this.setFavoriteList(favoriteList)
+
+    let historyList = JSON.parse(window.localStorage.getItem('historyList'))
+    if (historyList === null) { return }
+    this.setHistoryList(historyList)
   },
   mounted () {
     this.$refs.audio.oncanplay = () => {
