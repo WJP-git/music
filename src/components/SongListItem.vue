@@ -56,13 +56,16 @@ export default {
         margin-right: 20px;
       }
       div{
+        width: 70%;
         h3{
           @include font_size($font_large);
           @include font_color();
+          @include no-wrap();
         }
         p{
           @include font_size($font_samll);
           @include font_color();
+          @include no-wrap();
           opacity: 0.6;
           margin-top: 20px;
         }

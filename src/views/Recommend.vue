@@ -22,7 +22,6 @@ import Banner from '../components/Recommend/Banner'
 import Personalized from '../components/Recommend/Personalized'
 import SongList from '../components/Recommend/SongList'
 import ScrollView from '../components/ScrollView'
-
 export default {
   name: 'Recommend',
   components: {
@@ -75,7 +74,6 @@ export default {
       .then((data) => {
         // console.log(data)
         // this.songs = data.result
-        console.log(data.result)
         let list = []
         data.result.forEach((value) => {
           let obj = {}
