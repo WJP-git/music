@@ -33,13 +33,6 @@ export default {
     switchItem (num) {
       this.switchNum = num
     }
-  },
-  props: {
-    title: {
-      type: String,
-      default: '',
-      required: true
-    }
   }
 }
 </script>
