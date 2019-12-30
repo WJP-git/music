@@ -47,7 +47,7 @@ export default {
       display: flex;
       align-items: center;
       padding: 0 20px;
-      margin-bottom: 20px;
+      /*margin-bottom: 20px;*/
       border-bottom: 1px solid #ccc;
       img{
         width: 100px;

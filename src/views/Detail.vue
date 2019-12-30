@@ -45,7 +45,6 @@ export default {
     } else if (this.$route.params.type === 'album') {
       getAlbum({ id: this.$route.params.id })
         .then((data) => {
-          console.log(data)
           this.playlist = {
             name: data.album.name,
             coverImgUrl: data.album.picUrl,

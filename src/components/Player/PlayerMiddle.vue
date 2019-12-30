@@ -83,7 +83,7 @@ export default {
       let lineNum = Math.floor(newValue)
       this.currentLineNum = this.getActiveLineNum(lineNum)
       // 2.歌词滚动同步
-      let currentLyricTop = document.querySelector('li.active').offsetTop
+      let currentLyricTop = document.querySelector('.lyric .active').offsetTop
       let lyricHeight = this.$refs.lyric.$el.offsetHeight
       if (currentLyricTop > lyricHeight / 2) {
         this.$refs.scrollView.scrollTo(0, lyricHeight / 2 - currentLyricTop, 100)

@@ -6,7 +6,7 @@
           <Banner :banners="banners"></Banner>
           <Personalized :personalized="personalized" :title="'推荐歌单'" @select="fatherSelectItem" :type="'personalized'"></Personalized>
           <Personalized :personalized="albums" :title="'最新专辑'" @select="fatherSelectItem" :type="'album'"></Personalized>
-          <SongList :songs="songs"></SongList>
+          <NewSongs :songs="songs"></NewSongs>
         </div>
       </ScrollView>
     </div>
@@ -20,14 +20,14 @@
 import { getBanner, getPersonalized, getNewAlbum, getNewSong } from '../api/index'
 import Banner from '../components/Recommend/Banner'
 import Personalized from '../components/Recommend/Personalized'
-import SongList from '../components/Recommend/SongList'
+import NewSongs from '../components/Recommend/NewSongs'
 import ScrollView from '../components/ScrollView'
 export default {
   name: 'Recommend',
   components: {
     Banner,
     Personalized,
-    SongList,
+    NewSongs,
     ScrollView
   },
   methods: {
