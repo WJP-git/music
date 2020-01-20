@@ -1,8 +1,8 @@
 <template>
   <div class="singer">
-    <ScrollView>
+    <ScrollView ref="scrollView">
       <ul class="list-wrapper">
-        <li class="list-group" v-for="(value, index) in list" :key="index">
+        <li class="list-group" v-for="(value, index) in list" :key="index" ref="group">
           <h2 class="group-title">{{keys[index]}}</h2>
           <ul>
             <li class="group-item" v-for="obj in list[index]" :key="obj.id">
@@ -13,6 +13,20 @@
         </li>
       </ul>
     </ScrollView>
+    <ul class="list-keys">
+      <!--
+      <li v-for="(key, index) in keys"
+          :key="key"
+          @click.stop="keyDown(index)"
+          :class="{'active': currentIndex === index}">{{key}}</li>
+      -->
+      <li v-for="(key, index) in keys"
+          :key="key"
+          :data-index="index"
+          @touchstart.stop.prevent="touchstart"
+          @touchmove.stop.prevent="touchmove"
+          :class="{'active': currentIndex === index}">{{key}}</li>
+    </ul>
   </div>
 </template>
 
@@ -23,6 +37,34 @@ export default {
   name: 'Singer',
   components: {
     ScrollView
+  },
+  methods: {
+    _keyDown (index) {
+      this.currentIndex = index
+      // console.log(index)
+      let offsetY = this.groupsTop[index]
+      // console.log(offsetY)
+      this.$refs.scrollView.scrollTo(0, -offsetY)
+    },
+    touchstart (e) {
+      // console.log(e.target.dataset.index)
+      let index = parseInt(e.target.dataset.index)
+      this._keyDown(index)
+
+      this.beginOffsetY = e.touches[0].pageY
+    },
+    touchmove (e) {
+      this.moveOffsetY = e.touches[0].pageY
+      let offsetY = (this.moveOffsetY - this.beginOffsetY) / e.target.offsetHeight
+      // console.log(offsetY)
+      let index = parseInt(e.target.dataset.index) + Math.floor(offsetY)
+      if (index < 0) {
+        index = 0
+      } else if (index > this.keys.length - 1) {
+        index = this.keys.length - 1
+      }
+      this._keyDown(index)
+    }
   },
   created () {
     getAllArtists()
@@ -38,7 +80,26 @@ export default {
   data () {
     return {
       keys: [],
-      list: []
+      list: [],
+      groupsTop: [],
+      currentIndex: 0,
+      beginOffsetY: 0,
+      moveOffsetY: 0
+    }
+  },
+  watch: {
+    list () {
+      // console.log(this.$refs.group)
+      // 注意点: watch只能监听数据的变化, 数据变化的时候不一定已经渲染完了
+      //         所以为了保证是渲染完成之后再去获取, 我们可以借助Vue的$nextTick方法来实现
+      //         也就是说在$nextTick回调函数中一定能拿到渲染完成只有的数据, 因为$nextTick的回调函数只有渲染完成之后才会执行
+      this.$nextTick(() => {
+        // console.log(this.$refs.group)
+        this.$refs.group.forEach((group) => {
+          this.groupsTop.push(group.offsetTop)
+        })
+        // console.log(this.groupsTop)
+      })
     }
   }
 }
@@ -84,6 +145,20 @@ export default {
           align-items: center;
           margin-left: 20px;
         }
+      }
+    }
+  }
+  .list-keys{
+    position: fixed;
+    right: 10px;
+    top: 60%;
+    transform: translateY(-50%);
+    li{
+      @include font_color();
+      @include font_size($font_medium_s);
+      padding: 3px 0;
+      &.active{
+        text-shadow: 0 0 10px #000;
       }
     }
   }
