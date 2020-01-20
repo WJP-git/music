@@ -5,8 +5,20 @@
 </template>
 
 <script>
+// import { getHotArtists } from '../api/index'
+// import { getLetterArtists } from '../api/index'
+import { getAllArtists } from '../api/index'
 export default {
-  name: 'Singer'
+  name: 'Singer',
+  created () {
+    getAllArtists()
+      .then(function (result) {
+        console.log(result)
+      })
+      .catch(function (err) {
+        console.log(err)
+      })
+  }
 }
 </script>
 
