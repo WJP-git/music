@@ -27,6 +27,7 @@
           @touchmove.stop.prevent="touchmove"
           :class="{'active': currentIndex === index}">{{key}}</li>
     </ul>
+    <div class="fix-title" v-show="fixTitle !== ''" ref="fixTitle">{{fixTitle}}</div>
   </div>
 </template>
 
@@ -66,6 +67,15 @@ export default {
       this._keyDown(index)
     }
   },
+  computed: {
+    fixTitle () {
+      if (this.scrollY >= 0) {
+        return ''
+      } else {
+        return this.keys[this.currentIndex]
+      }
+    }
+  },
   created () {
     getAllArtists()
       .then((result) => {
@@ -79,6 +89,7 @@ export default {
   },
   mounted () {
     this.$refs.scrollView.scrolling((y) => {
+      this.scrollY = y
       // 处理第一个区域
       if (y >= 0) {
         this.currentIndex = 0
@@ -90,6 +101,21 @@ export default {
         let nextTop = this.groupsTop[i + 1]
         if (-y >= preTop && -y <= nextTop) {
           this.currentIndex = i
+
+          // 1.用下一组标题的偏移位 + 当前滚动出去的偏移位
+          let diffOffsetY = nextTop + y
+          let fixTitleOffsetY = 0
+          // 2.判断计算的结果是否是 0 ~ 分组标题高度的值
+          if (diffOffsetY >= 0 && diffOffsetY <= this.fixTitleHeight) {
+            fixTitleOffsetY = diffOffsetY - this.fixTitleHeight
+          } else {
+            fixTitleOffsetY = 0
+          }
+          if (fixTitleOffsetY === this.fixTitleOffsetY) {
+            return
+          }
+          this.fixTitleOffsetY = fixTitleOffsetY
+          this.$refs.fixTitle.style.transform = `translateY(${fixTitleOffsetY}px)`
           return
         }
       }
@@ -104,21 +130,22 @@ export default {
       groupsTop: [],
       currentIndex: 0,
       beginOffsetY: 0,
-      moveOffsetY: 0
+      moveOffsetY: 0,
+      scrollY: 0
     }
   },
   watch: {
     list () {
-      // console.log(this.$refs.group)
-      // 注意点: watch只能监听数据的变化, 数据变化的时候不一定已经渲染完了
-      //         所以为了保证是渲染完成之后再去获取, 我们可以借助Vue的$nextTick方法来实现
-      //         也就是说在$nextTick回调函数中一定能拿到渲染完成只有的数据, 因为$nextTick的回调函数只有渲染完成之后才会执行
       this.$nextTick(() => {
         // console.log(this.$refs.group)
         this.$refs.group.forEach((group) => {
           this.groupsTop.push(group.offsetTop)
         })
-        // console.log(this.groupsTop)
+      })
+    },
+    fixTitle () {
+      this.$nextTick(() => {
+        this.fixTitleHeight = this.$refs.fixTitle.offsetHeight
       })
     }
   }
@@ -181,6 +208,17 @@ export default {
         text-shadow: 0 0 10px #000;
       }
     }
+  }
+  .fix-title{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    @include font_size($font_medium);
+    color: #fff;
+    @include bg_color();
   }
 }
 </style>
