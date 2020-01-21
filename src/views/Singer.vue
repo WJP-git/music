@@ -5,7 +5,7 @@
         <li class="list-group" v-for="(value, index) in list" :key="index" ref="group">
           <h2 class="group-title">{{keys[index]}}</h2>
           <ul>
-            <li class="group-item" v-for="obj in list[index]" :key="obj.id">
+            <li class="group-item" v-for="obj in list[index]" :key="obj.id" @click.stop="switchSinger(obj.id)">
               <img v-lazy="obj.img1v1Url" alt="">
               <p>{{obj.name}}</p>
             </li>
@@ -28,6 +28,9 @@
           :class="{'active': currentIndex === index}">{{key}}</li>
     </ul>
     <div class="fix-title" v-show="fixTitle !== ''" ref="fixTitle">{{fixTitle}}</div>
+    <transition>
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -65,6 +68,9 @@ export default {
         index = this.keys.length - 1
       }
       this._keyDown(index)
+    },
+    switchSinger (id) {
+      this.$router.push(`/singer/detail/${id}/singer`)
     }
   },
   computed: {
@@ -107,8 +113,10 @@ export default {
           let fixTitleOffsetY = 0
           // 2.判断计算的结果是否是 0 ~ 分组标题高度的值
           if (diffOffsetY >= 0 && diffOffsetY <= this.fixTitleHeight) {
+            // 满足条件开始移动上一组标题
             fixTitleOffsetY = diffOffsetY - this.fixTitleHeight
           } else {
+            // 不满足条件需要固定在顶部
             fixTitleOffsetY = 0
           }
           if (fixTitleOffsetY === this.fixTitleOffsetY) {
@@ -221,4 +229,22 @@ export default {
     @include bg_color();
   }
 }
+  .v-enter{
+    transform: translateX(100%);
+  }
+  .v-enter-to{
+    transform: translateX(0%);
+  }
+  .v-enter-active{
+    transition: transform 1s;
+  }
+  .v-leave{
+    transform: translateX(0%);
+  }
+  .v-leave-to{
+    transform: translateX(100%);
+  }
+  .v-leave-active{
+    transition: transform 1s;
+  }
 </style>

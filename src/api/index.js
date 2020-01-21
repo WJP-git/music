@@ -11,6 +11,7 @@ export const getAlbum = (data) => Network.get('album', data)
 export const getSongDetail = (data) => Network.get('song/detail', data)
 export const getSongLyric = (data) => Network.get('lyric', data)
 export const getSongURL = (data) => Network.get('song/url', data)
+export const getArtistsSongs = (data) => Network.get('artists', data)
 // export const getHotArtists = () => Network.get('top/artists?offset=0&limit=5')
 export const getHotArtists = () => {
   return new Promise(function (resolve, reject) {
