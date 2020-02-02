@@ -5,8 +5,18 @@
 </template>
 
 <script>
+import { getTopListDetail } from '../api/index'
 export default {
-  name: 'Rank'
+  name: 'Rank',
+  created () {
+    getTopListDetail()
+      .then(function (data) {
+        console.log(data)
+      })
+      .catch(function (err) {
+        console.log(err)
+      })
+  }
 }
 </script>
 
