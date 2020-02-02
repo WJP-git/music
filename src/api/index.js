@@ -129,3 +129,4 @@ export const getTopListDetail = () => {
   })
 }
 export const getTopList = (data) => Network.get('top/list', data)
+export const getSearchList = (data) => Network.get('search?type=1', data)
