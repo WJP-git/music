@@ -128,3 +128,4 @@ export const getTopListDetail = () => {
       })
   })
 }
+export const getTopList = (data) => Network.get('top/list', data)

@@ -5,7 +5,7 @@
         <li v-for="(value, key) in category.titles" :key="key">
           <h3 class="group-title">{{value}}</h3>
           <ul class="normal-group" v-if="value === '官方榜'">
-            <li v-for="obj in category[key]" :key="obj.rank.id">
+            <li v-for="obj in category[key]" :key="obj.rank.id" @click.stop="selectedItem(obj.id)">
               <div class="rank-left">
                 <img v-lazy="obj.rank.coverImgUrl" alt="">
                 <p>{{obj.rank.updateFrequency}}</p>
@@ -16,7 +16,7 @@
             </li>
           </ul>
           <ul class="other-group" v-else>
-            <li v-for="obj in category[key]" :key="obj.rank.id">
+            <li v-for="obj in category[key]" :key="obj.rank.id" @click.stop="selectedItem(obj.id)">
               <div class="rank-top">
                 <img v-lazy="obj.rank.coverImgUrl" alt="">
                 <p>{{obj.rank.updateFrequency}}</p>
@@ -29,6 +29,9 @@
         </li>
       </ul>
     </ScrollView>
+    <transition>
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -39,6 +42,11 @@ export default {
   name: 'Rank',
   components: {
     ScrollView
+  },
+  methods: {
+    selectedItem (id) {
+      this.$router.push(`/rank/detail/${id}/rank`)
+    }
   },
   data () {
     return {
@@ -141,4 +149,22 @@ export default {
     }
   }
 }
+  .v-enter{
+    transform: translateX(100%);
+  }
+  .v-enter-to{
+    transform: translateX(0%);
+  }
+  .v-enter-active{
+    transition: transform 1s;
+  }
+  .v-leave{
+    transform: translateX(0%);
+  }
+  .v-leave-to{
+    transform: translateX(100%);
+  }
+  .v-leave-active{
+    transition: transform 1s;
+  }
 </style>
