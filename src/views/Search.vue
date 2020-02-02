@@ -14,12 +14,18 @@
         </ul>
       </ScrollView>
     </div>
+    <div class="search-hot">
+      <h3>热门搜索</h3>
+      <ul>
+        <li v-for="value in hots" :key="value.first" @click.stop="selectedHot(value.first)">{{value.first}}</li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
 import ScrollView from '../components/ScrollView'
-import { getSearchList } from '../api/index'
+import { getSearchList, getSearchHot } from '../api/index'
 import { mapActions } from 'vuex'
 export default {
   name: 'Search',
@@ -29,7 +35,8 @@ export default {
   data () {
     return {
       keywords: '',
-      songs: []
+      songs: [],
+      hots: []
     }
   },
   methods: {
@@ -54,6 +61,10 @@ export default {
     selectMusic (id) {
       this.setFullScreen(true)
       this.setSongDetail([id])
+    },
+    selectedHot (name) {
+      this.keywords = name
+      this.search()
     }
   },
   directives: {
@@ -73,6 +84,16 @@ export default {
         })
       }
     }
+  },
+  created () {
+    getSearchHot()
+      .then((data) => {
+        // console.log(data)
+        this.hots = data.result.hots
+      })
+      .catch(function (err) {
+        console.log(err)
+      })
   }
 }
 </script>
@@ -116,6 +137,7 @@ export default {
       top: 300px;
       bottom: 0;
       overflow: hidden;
+      @include bg_sub_color();
       li{
         display: flex;
         align-items: center;
@@ -130,6 +152,27 @@ export default {
           margin-left: 20px;
           @include font_color();
           @include font_size($font_medium);
+        }
+      }
+    }
+    .search-hot{
+      h3{
+        @include font_color();
+        @include font_size($font_medium);
+        padding: 10px 20px;
+      }
+      ul{
+        display: flex;
+        flex-wrap: wrap;
+        li{
+          height: 60px;
+          line-height: 60px;
+          border: 1px solid #000;
+          border-radius: 30px;
+          padding: 0 20px;
+          @include font_color();
+          @include font_size($font_medium_s);
+          margin: 10px 20px;
         }
       }
     }
