@@ -85,7 +85,7 @@ export default {
   created () {
     getAllArtists()
       .then((result) => {
-        console.log(result)
+        // console.log(result)
         this.keys = result.keys
         this.list = result.list
       })
