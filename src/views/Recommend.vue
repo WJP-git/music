@@ -22,8 +22,11 @@ import Banner from '../components/Recommend/Banner'
 import Personalized from '../components/Recommend/Personalized'
 import NewSongs from '../components/Recommend/NewSongs'
 import ScrollView from '../components/ScrollView'
+import MetaInfo from '../../vue-meta-info'
+
 export default {
   name: 'Recommend',
+  metaInfo: MetaInfo.recommend,
   components: {
     Banner,
     Personalized,
