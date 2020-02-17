@@ -98,6 +98,8 @@ export default {
 1.使用预渲染解决SPA应用SEO问题
 https://www.npmjs.com/package/vue-cli-plugin-prerender-spa
 注意点: Router必须使用history模式
+*/
+/*
 2.使用vue-meta-info统一管理SEO三大标签
 https://www.npmjs.com/package/vue-meta-info
 * */

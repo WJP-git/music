@@ -78,8 +78,9 @@ const router = new VueRouter({
   解决方案: 1.Router这两个不要使用history模式, 使用hash模式
             2.在服务端上面进行一些额外的配置
   * */
-  // mode: 'history',
-  mode: 'hash',
+  // 注意点: 如果需要使用预渲染的插件, 那么Router的模式必须是history模式
+  mode: 'history',
+  // mode: 'hash',
   base: process.env.BASE_URL,
   routes
 })
