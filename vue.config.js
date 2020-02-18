@@ -1,3 +1,6 @@
+const jsdom = require('jsdom')
+const { JSDOM } = jsdom
+
 module.exports = {
   /* 部署应用包的基本URL, 不设置可能会出现打包后项目找不到资源问题 */
   publicPath: './',
@@ -33,7 +36,14 @@ module.exports = {
       ],
       useRenderEvent: true,
       headless: true,
-      onlyProduction: true
+      onlyProduction: true,
+      postProcess: route => {
+        // console.log(route)
+        let reg = /<meta name="viewport".*user-scalable=no">/gi
+        let res = route.html.match(reg)
+        route.html = route.html.replace(res[1], '')
+        return route
+      }
     }
   }
 }

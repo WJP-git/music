@@ -32,6 +32,7 @@
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "html-loader": "^0.5.5",
+    "jsdom": "^16.2.0",
     "lint-staged": "^9.4.3",
     "postcss-pxtorem": "^4.0.1",
     "prerender-spa-plugin": "^3.2.1",
