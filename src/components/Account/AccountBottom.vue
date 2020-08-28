@@ -94,6 +94,10 @@ export default {
         @include bg_img('../../assets/images/small_play');
         margin-right: 20px;
       }
+      &:nth-of-type(2){
+        @include font_color();
+        @include font_size($font_medium_s);
+      }
     }
   }
   .bottom-wrapper{
